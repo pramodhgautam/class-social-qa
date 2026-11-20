@@ -98,10 +98,12 @@ with st.sidebar:
 if "messages" not in st.session_state:
     st.session_state.messages = []
 
+# Display existing chat history
 for msg in st.session_state.messages:
     with st.chat_message(msg["role"]):
         st.markdown(msg["content"])
-        if msg["role"] == "assistant" and "source" in msg:
+        # Show retrieved source if it was an assistant message
+        if msg["role"] == "assistant" and msg.get("source"):
             with st.expander("🔍 View Source & Score"):
                 st.write(f"**Distance:** {msg['source']['distance']:.3f}")
                 st.write(f"**Unit:** {msg['source']['unit']}")
